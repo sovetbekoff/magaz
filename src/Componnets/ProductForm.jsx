@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "../styles/ProductForm.css"; // Импорт стилей
 
-const ProductForm = ({ addProduct, updateProduct, productForEdit }) => {
-  const [selectedProductForEdit, setSelectedProductForEdit] = useState(null);
-
+const ProductForm = ({ addProduct, updateProduct }) => {
   const [formData, setFormData] = useState({
     id: null,
     name: "",
@@ -14,19 +12,18 @@ const ProductForm = ({ addProduct, updateProduct, productForEdit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.description || !formData.year) return;
+    if (!formData.name || !formData.price) return;
 
     if (formData.id) {
-      // Если есть productForEdit, то это редактирование
       updateProduct(formData);
-      setSelectedProductForEdit(null); // Очистка выбранного товара для редактирования
     } else {
       const newProduct = { ...formData, id: Date.now() };
       addProduct(newProduct);
     }
 
-    setFormData({ id: null, name: "", description: "", year: "" });
+    setFormData({ id: null, name: "", price: "", details: "", year: "" });
   };
+
   return (
     <div className="product-form">
       <h2>Добавить/Редактировать товар</h2>
